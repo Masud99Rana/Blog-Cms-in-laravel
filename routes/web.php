@@ -12,7 +12,8 @@
 */
 
 Route::get('/', [
-	'uses'=> 'BLogController@index'
+	'uses'=> 'BLogController@index',
+	'as' =>'blog'
 ]);
 
 Route::get('/blog/show', function () {
