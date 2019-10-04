@@ -25,3 +25,8 @@ Route::get('/category/{category}',[
 	'uses'=> 'BLogController@category',
 	'as' =>'category'
 ]);
+
+Route::get('/author/{author}',[
+	'uses'=> 'BLogController@author',
+	'as' =>'author.post'
+]);

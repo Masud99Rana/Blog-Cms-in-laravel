@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -22,10 +23,6 @@ class BLogController extends Controller
 
     public function category(Category $category)
     {
-    	$categories = Category::with(['posts'=>function($query){
-    		// $query->where('published_at', '<=', Carbon::now());
-    		$query->published(); //scope
-    	}])->orderBy('title','asc')->get();
 
         $categoryName = $category->title;
 
@@ -35,10 +32,22 @@ class BLogController extends Controller
                           ->published()
                           ->simplePaginate($this->limit);
 
-         return view("blog.index", compact('posts','categories','categoryName'));
+         return view("blog.index", compact('posts','categoryName'));
     }
 
     public function show(Post $post){
     	return view('blog.show',compact('post'));
+    }
+
+    public function author(User $author){
+    	$authorName = $author->name;
+
+    	$posts = $author->posts()
+    	                  ->with('category')
+    	                  ->latestFirst()
+    	                  ->published()
+    	                  ->simplePaginate($this->limit);
+
+    	 return view("blog.index", compact('posts','authorName'));
     }
 }

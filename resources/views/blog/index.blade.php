@@ -19,6 +19,12 @@
                 </div>
             @endisset
 
+            @isset ($authorName)
+                <div class="alert alert-info">
+                    <p>Author Name: <strong> {{$authorName}} </strong></p>
+                </div>
+            @endisset
+
             @foreach ($posts as $post)            
                 <article class="post-item">
 
@@ -40,7 +46,7 @@
                         <div class="post-meta padding-10 clearfix">
                             <div class="pull-left">
                                 <ul class="post-meta-group">
-                                    <li><i class="fa fa-user"></i><a href="#">{{ $post->author->name}}</a></li>
+                                    <li><i class="fa fa-user"></i><a href="{{ route('author.post',$post->author->slug) }}">{{ $post->author->name}}</a></li>
                                     <li><i class="fa fa-clock-o"></i><time> {{$post->date}}</time></li>
                                     <li><i class="fa fa-tags"></i><a href="{{ route('category', $post->category->slug) }}">{{ $post->category->title }}</a></li>
                                     <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
