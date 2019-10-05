@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 class Post extends Model
 {	
-    protected $fillable = ['view_count'];
+    protected $fillable = ['title', 'slug', 'excerpt', 'body', 'published_at', 'category_id', 'image'];
     protected $dates = ['published_at'];
 
 	public function author()
@@ -62,6 +62,26 @@ class Post extends Model
     public function getExcerptHtmlAttribute($value)
     {
         return $this->excerpt ? Markdown::convertToHtml(e($this->excerpt)) : NULL;
+    }
+
+    public function dateFormatted($showTimes = false)
+    {
+        $format = "d/m/Y";
+        if ($showTimes) $format = $format . " H:i:s";
+        return $this->created_at->format($format);
+    }
+
+    public function publicationLabel()
+    {
+        if ( ! $this->published_at) {
+            return '<span class="label label-warning">Draft</span>';
+        }
+        elseif ($this->published_at && $this->published_at->isFuture()) {
+            return '<span class="label label-info">Schedule</span>';
+        }
+        else {
+            return '<span class="label label-success">Published</span>';
+        }
     }
 
 
