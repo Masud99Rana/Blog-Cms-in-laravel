@@ -1,10 +1,23 @@
+html{
+    position: relative;
+    min-height: 100%
+}
+
 body {
     font-family: 'Raleway', sans-serif;
     padding-top: 70px;
     color: #777;
-
+    margin-bottom: 60px;
     background: #fcfcfc  url("../img/body-bg.png");
 }
+
+/*.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;
+}*/
 
 a {
     color: #333;
@@ -26,7 +39,7 @@ a:hover {
     letter-spacing: 1.5px;
 }
 
-header .navbar-default, .post-item, .widget, footer, .post-author, .post-comments {
+header .navbar-default, .post-item, .widget, footer, .post-author, .post-comments, .page-not-found {
     background: #fff;
 }
 
@@ -54,10 +67,24 @@ header .navbar-default, .post-item, .widget, footer, .post-author, .post-comment
     border: none;
 }
 
-.post-item-body, .post-author, .post-comments {
+.post-item-body, .post-author, .post-comments, .page-not-found {
     border: 1px solid #e7e7e7;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.03);
     /*border: 1px solid #e7e7e7;*/
+}
+
+.page-not-found{
+    text-align: center;
+    padding: 60px 0;
+}
+
+.page-not-found p{
+    font-size: 2em;
+}
+
+.page-not-found h2{
+    font-size: 5em;
+    letter-spacing: -4px;
 }
 
 .post-item-body h2, .post-item-body h1 {
@@ -299,6 +326,9 @@ ul.tags li a:hover {
 }
 
 footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     border-top: 1px solid #e7e7e7;
     padding: 15px 0;
 }
