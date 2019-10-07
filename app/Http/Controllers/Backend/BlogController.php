@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 
 class BlogController extends BackendController
 {   
     protected $limit = 5;
+    protected $uploadPath;
+
+    public function __construct(){
+        parent::__construct();
+        $this->uploadPath = public_path('app/img');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,10 +33,10 @@ class BlogController extends BackendController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Post $post)
     {   
 
-        return view('backend.blog.create');
+        return view('backend.blog.create', compact('post'));
     }
 
     /**
@@ -38,9 +45,40 @@ class BlogController extends BackendController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request){
+    /*public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'excerpt' => 'required',
+            'slug' => 'required|unique:posts',
+            'body' => 'required',
+            'published_at' => 'date_format:Y-m-d H:i:s',
+            'category_id' => 'required'
+        ]);*/
+        $data = $this->handleRequest($request);
+        $data['view_count'] = 0;
+
+        $request->user()->posts()->create($data);
+
+        return redirect('backend/blog')->with('success', 'Your post was created successfully!');
+    }
+
+
+    private function handleRequest($request){
+        $data = $request->all();
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $fileName = $image ->getClientOriginalName();
+            $destination = $this->uploadPath;
+
+            $image->move($destination, $fileName);
+
+            $data['image'] = $fileName;
+        }
+
+        return $data;
     }
 
     /**

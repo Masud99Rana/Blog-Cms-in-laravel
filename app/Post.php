@@ -20,6 +20,11 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function setPublishedAtAttribute($value)
+    {
+        $this->attributes['published_at'] = $value ?: NULL;
+    }
     
     public function getImageUrlAttribute($value){
     	$imageUrl = "";
