@@ -28,7 +28,7 @@
             <div class="box">
               <div class="box-header">
                 <div class="pull-left">
-                  <a href="{{ route('backend.blog.create') }}" class="btn btn-success">Add new</a>
+                  <a href="{{ route('backend.blog.create') }}" class="btn btn-success"> <i class="fa fa-plus"></i> Add new</a>
                 </div>
               </div>
               <!-- /.box-header -->

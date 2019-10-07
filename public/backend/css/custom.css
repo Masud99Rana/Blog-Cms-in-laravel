@@ -4,3 +4,13 @@
 .has-feedback {
     color: red !important;
 }
+
+.form-group.excerpt .CodeMirror {
+    height: 130px !important;
+    min-height: 130px !important;
+}
+
+.fileinput-preview.fileinput-exists.img-thumbnail img {
+    max-width: 200px;
+    height: 150px;
+}
