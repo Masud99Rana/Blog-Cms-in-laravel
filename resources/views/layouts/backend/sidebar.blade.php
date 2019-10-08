@@ -36,7 +36,7 @@
             <li><a href="{{ route('backend.blog.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
           </ul>
         </li>
-        <li><a href="#"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
+        <li><a href="{{ route('backend.categories.index') }}"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
