@@ -2,7 +2,7 @@
 
 
 
-@section('title','MyBlog | Add new post')
+@section('title','MyBlog | Edit Post')
 
 @section('content')
 
@@ -10,14 +10,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Blog <small>Add new post</small>
+        Blog <small>Edit Post</small>
       </h1>
       <ol class="breadcrumb">
         <li>
           <a href="{{ url('/home') }}"><i class="fa fa-dashboard"></i>Dashboard</a> 
         </li>
         <li><a href="{{ route('backend.blog.index') }}">Blog</a></li>
-        <li class="active">Add new</li>
+        <li class="active">Edit post</li>
       </ol>
     </section>
 
@@ -26,8 +26,8 @@
         <div class="row">
 
           {!! Form::model($post,[
-            'method' => 'POST',
-            'route' => 'backend.blog.store',
+            'method' => 'PUT',
+            'route' => ['backend.blog.update', $post->id],
             'id'=>'post-form',
             'files' => TRUE
             ]) !!}

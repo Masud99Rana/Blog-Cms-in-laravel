@@ -22,8 +22,11 @@ class PostRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [
+    {   
+        // dd($this->method());
+        // dd($this->route('blog')); blog is a parameter
+        
+        $rules = [
             'title' => 'required',
             'excerpt' => 'required',
             'slug' => 'required|unique:posts',
@@ -32,5 +35,15 @@ class PostRequest extends FormRequest
             'category_id' => 'required',
             'image' => 'mimes:jpg,jpeg,bmp,png'
         ];
+        
+        switch ($this->method()) {
+            case 'PUT':
+            case 'PATCH':
+                $rules['slug'] = 'required|unique:posts,slug,'.$this->route('blog');
+                break;
+        }
+
+        return $rules;
+        
     }
 }

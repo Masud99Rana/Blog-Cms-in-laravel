@@ -22,12 +22,23 @@ class BlogController extends BackendController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {   
-        $posts = Post::with('category','author')->latest()->paginate($this->limit);
-        $allPostCount = Post::count();
+        if(($status = $request->get('status')) && $status == 'trash'){
+            $posts = Post::onlyTrashed()->with('category','author')->latest()->paginate($this->limit);
+            $allPostCount = Post::onlyTrashed()->count();
 
-        return view('backend.blog.index',compact('posts','allPostCount'));
+            $onlyTrashed = TRUE;
+        }else{
+            $posts = Post::with('category','author')->latest()->paginate($this->limit);
+            $allPostCount = Post::count();
+            $onlyTrashed = FALSE;
+
+
+        }
+        
+
+        return view('backend.blog.index',compact('posts','allPostCount', 'onlyTrashed'));
     }
 
     /**
@@ -63,7 +74,7 @@ class BlogController extends BackendController
 
         $request->user()->posts()->create($data);
 
-        return redirect('backend/blog')->with('success', 'Your post was created successfully!');
+        return redirect('backend/blog')->with('message', 'Your post was created successfully!');
     }
 
 
@@ -112,8 +123,10 @@ class BlogController extends BackendController
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $post = Post::findOrFail($id);
+
+        return view('backend.blog.edit', compact('post'));
     }
 
     /**
@@ -123,9 +136,14 @@ class BlogController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $data = $this->handleRequest($request);
+
+        $post->update($data);
+
+        return redirect('backend/blog')->with('message', 'Your post was updated successfully!');
     }
 
     /**
@@ -136,6 +154,21 @@ class BlogController extends BackendController
      */
     public function destroy($id)
     {
-        //
+        Post::findOrFail($id)->delete();
+
+        return redirect('backend/blog')->with('trash-message', ['Your post has been moved to Trash', $id]);
+    }
+
+    public function forceDestroy($id){
+        Post::withTrashed()->findOrFail($id)->forceDelete();
+        return redirect('backend/blog?status=trash')->with('message','Your post has been deleted successfully.');
+    }
+
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->restore();
+
+        return redirect('backend/blog')->with('message','Your post has been removed from Trash');
     }
 }
