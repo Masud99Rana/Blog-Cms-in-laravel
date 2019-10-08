@@ -13,12 +13,7 @@ class CategoryDestroyRequest extends FormRequest
      */
     public function authorize()
     {
-        return !($this->route('categories') == config('cms.default_category_id'));
-    }
-
-    public function forbiddenResponse()
-    {
-        return redirect()->back()->with('error-message', 'You cannot delete default category!');
+        return !($this->route('category') == config('cms.default_category_id'));
     }
 
     /**
