@@ -1,17 +1,23 @@
-@isset ($categoryName)
+@if (isset($categoryName))
     <div class="alert alert-info">
-        <p>Category: <strong> {{$categoryName}} </strong></p>
+        <p>Category: <strong>{{ $categoryName }}</strong></p>
     </div>
-@endisset
+@endif
 
-@isset ($authorName)
+@if (isset($tagName))
     <div class="alert alert-info">
-        <p>Author Name: <strong> {{$authorName}} </strong></p>
+        <p>Tagged: <strong>{{ $tagName }}</strong></p>
     </div>
-@endisset
+@endif
 
-@if ($term= request('term'))
+@if (isset($authorName))
     <div class="alert alert-info">
-        <p>Search Results for: <strong> {{$term}} </strong></p>
+        <p>Author: <strong>{{ $authorName }}</strong></p>
     </div>
-@endisset
+@endif
+
+@if ($term = request('term'))
+    <div class="alert alert-info">
+        <p>Search Results for: <strong>{{ $term }}</strong></p>
+    </div>
+@endif
