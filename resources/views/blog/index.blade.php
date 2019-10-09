@@ -13,17 +13,7 @@
 
         @else
             
-            @isset ($categoryName)
-                <div class="alert alert-info">
-                    <p>Category: <strong> {{$categoryName}} </strong></p>
-                </div>
-            @endisset
-
-            @isset ($authorName)
-                <div class="alert alert-info">
-                    <p>Author Name: <strong> {{$authorName}} </strong></p>
-                </div>
-            @endisset
+            @include('blog.alert')
 
             @foreach ($posts as $post)            
                 <article class="post-item">
@@ -70,7 +60,7 @@
                     <li class="next"><a href="#">Older <span aria-hidden="true">&rarr;</span></a></li>
                   </ul> --}}
 
-                  {{$posts->links()}}
+                  {{$posts->appends(request()->only(['term']))->links()}}
                 </nav>
             </div>
 
