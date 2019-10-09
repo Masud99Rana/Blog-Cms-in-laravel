@@ -28,7 +28,9 @@
                 </td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>-</td>
+                <?php
+                    $role = (isset($user->roles->first()->display_name))? $user->roles->first()->display_name: 'not assign' ?>
+                <td>{{ $role }}</td>
             </tr>
 
         @endforeach

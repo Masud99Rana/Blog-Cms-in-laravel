@@ -9,17 +9,32 @@
     </tr>
   </thead>
   <tbody>
+    <?php $request = request(); ?>
   @foreach ($posts as $post)                    
     <tr>
       <td>
-
+      
+      @if (check_user_permissions($request, "Blog@edit", $post->id))
         {!! Form::open(['method'=> 'DELETE', 'route'=>['backend.blog.destroy', $post->id]]) !!}
         <a href="{{ route('backend.blog.edit',$post->id) }}" class="btn btn-xs btn-default">
           <i class="fa fa-edit"></i>
         </a>
+      @else
+
+        <a href="#" class="btn btn-xs btn-default" disabled>
+          <i class="fa fa-edit"></i>
+        </a>
+      @endif
+
+      @if (check_user_permissions($request, "Blog@destroy", $post->id))
         <button type="submit" class="btn btn-xs btn-danger">
           <i class="fa fa-trash"></i>
         </button>
+      @else
+        <button type="button" onclick="return false;" class="btn btn-xs btn-danger" disabled>
+          <i class="fa fa-trash"></i>
+        </button>
+      @endif
         {!! Form::close() !!}
         
       </td>

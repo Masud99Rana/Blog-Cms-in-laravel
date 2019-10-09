@@ -33,13 +33,12 @@
                 <img src="{{ $currenUser->gravatar() }}" class="img-circle" alt="User Image">
 
                 <p>
-                  {{ $currenUser->name }} - Web Developer
-                </p>
+                  {{ $currenUser->name }} - {{$currenUser->roles->first()->display_name}}
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{ url('edit-account') }}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                  <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
