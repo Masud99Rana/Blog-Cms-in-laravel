@@ -14,7 +14,7 @@ class BLogController extends Controller
 	protected $limit = 3;
 
     public function index(){
-    	$posts = Post::with('author','tags','category')
+    	$posts = Post::with('author','tags','category','comments')
                     ->latestFirst()
                     ->published()
                     ->filter(request()->only(['term', 'year', 'month']))
@@ -59,14 +59,16 @@ class BLogController extends Controller
     	// #way -> 2
     	$post->increment('view_count');
 
-    	return view('blog.show',compact('post'));
+      $postComments = $post->comments()->simplePaginate(3);
+
+    	return view('blog.show',compact('post','postComments'));
     }
 
     public function author(User $author){
     	$authorName = $author->name;
 
     	$posts = $author->posts()
-    	                  ->with('category','tags')
+    	                  ->with('category','tags','comments')
     	                  ->latestFirst()
     	                  ->published()
     	                  ->simplePaginate($this->limit);

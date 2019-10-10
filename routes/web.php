@@ -21,6 +21,12 @@ Route::get('/blog/{post}',[
 	'as' =>'blog.show'
 ]);
 
+Route::post('/blog/{post}/comments', [
+    'uses' => 'CommentsController@store',
+    'as'   => 'blog.comments'
+]);
+
+
 Route::get('/category/{category}',[
 	'uses'=> 'BLogController@category',
 	'as' =>'category'

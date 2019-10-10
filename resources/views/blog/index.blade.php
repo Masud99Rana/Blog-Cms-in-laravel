@@ -42,7 +42,7 @@
                                     <li><i class="fa fa-tag"></i>{!! $post->tags_html !!}
 
                                     </li>
-                                    <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
+                                    <li><i class="fa fa-comments"></i><a href="{{route('blog.show',$post->slug)}}#post-comments">{{ $post->commentsNumber() }}</a></li>
                                 </ul>
                             </div>
                             <div class="pull-right">
