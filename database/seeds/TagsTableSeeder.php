@@ -14,7 +14,7 @@ class TagsTableSeeder extends Seeder
     public function run()
     {   
         // DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        //DB:L:table('tags')->delete();
+        //DB::table('tags')->delete();
         DB::table('tags')->truncate();
 
         $php = new Tag();

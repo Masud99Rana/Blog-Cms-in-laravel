@@ -17,7 +17,7 @@
           <a href="{{ url('/home') }}"><i class="fa fa-dashboard"></i>Dashboard</a> 
         </li>
         <li><a href="{{ route('backend.blog.index') }}">Blog</a></li>
-        <li class="active">Add new</li>
+        <li class="active">Add new </li>
       </ol>
     </section>
 
@@ -41,6 +41,7 @@
     </section>
     <!-- /.content -->
   </div>
+
 @endsection
 
 @include('backend.blog.script')

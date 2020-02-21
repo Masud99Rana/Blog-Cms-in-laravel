@@ -90,8 +90,8 @@ class BlogController extends BackendController
      */
     public function create(Post $post)
     {   
-
-        return view('backend.blog.create', compact('post'));
+        $posts=Post::all();
+        return view('backend.blog.create', compact('post','posts'));
     }
 
     /**
@@ -114,7 +114,9 @@ class BlogController extends BackendController
         $data = $this->handleRequest($request);
         $data['view_count'] = 0;
 
-        $request->user()->posts()->create($data);
+        $newPost = $request->user()->posts()->create($data);
+
+        $newPost->createTags($data["post_tags"]);
 
         return redirect('backend/blog')->with('message', 'Your post was created successfully!');
     }
@@ -185,6 +187,8 @@ class BlogController extends BackendController
         $data     = $this->handleRequest($request);
 
         $post->update($data);
+
+        $post->createTags($data['post_tags']);
 
         if($oldImage !== $post->image){
             $this->removeImage($oldImage);

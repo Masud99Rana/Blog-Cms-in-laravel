@@ -32,6 +32,7 @@ Route::get('/category/{category}',[
 	'as' =>'category'
 ]);
 
+
 Route::get('/author/{author}',[
 	'uses'=> 'BLogController@author',
 	'as' =>'author.post'
@@ -64,6 +65,10 @@ Route::resource('/backend/blog', 'Backend\BlogController',[
 ]);
 
 Route::resource('/backend/categories', 'Backend\CategoriesController',[
+	'as'=>'backend'
+]);
+
+Route::resource('/backend/tags', 'Backend\TagsController',[
 	'as'=>'backend'
 ]);
 

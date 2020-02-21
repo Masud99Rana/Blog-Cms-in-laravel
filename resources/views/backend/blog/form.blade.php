@@ -71,6 +71,7 @@
           </div>
 
 
+
       </div>
       <div class="box-footer clearfix">
         <div class="pull-left">
@@ -100,6 +101,18 @@
 
       </div>
     </div>{{-- box --}}
+
+
+    <div class="box">
+      <div class="box-header with-border">
+          <h3 class="box-title">Tags</h3>
+      </div>
+      <div class="box-body">
+          <div class="form-group">                
+              {!! Form::text('post_tags', null, ['class' => 'form-control']) !!}              
+          </div>
+      </div>
+    </div>
 
     <div class="box">
       <div class="box-header with-border">

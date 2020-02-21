@@ -99,6 +99,6 @@ class CategoriesController extends BackendController
         $category = Category::findOrFail($id);
         $category->delete();
 
-        // return redirect("/backend/categories")->with("message", "Category was deleted successfully!");
+        return redirect("/backend/categories")->with("message", "Category was deleted successfully!");
     }
 }

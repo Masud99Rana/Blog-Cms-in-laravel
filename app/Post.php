@@ -151,12 +151,58 @@ class Post extends Model
     }
 
     public static function archives()
-    {
+    {   // 2018-10-19 18:33:05
         return static::selectRaw('count(id) as post_count, year(published_at) year, monthname(published_at) month')
                         ->published()
                         ->groupBy('year', 'month')
                         ->orderByRaw('min(published_at) desc')
                         ->get();
+    }
+
+    // public function createTags($tagString)
+    // {   
+    //     // laravel,php,js
+    //     $tags = explode(",", $tagString);
+    //     $tagIds = [];
+
+    //     foreach ($tags as $tag) 
+    //     {        
+    //         $newTag = new Tag();
+    //         $newTag->name = ucwords(trim($tag));
+    //         $newTag->slug = str_slug($tag);
+    //         $newTag->save();  
+
+    //         $tagIds[] = $newTag->id;
+    //     }
+
+    //     $this->tags()->attach($tagIds);
+    // }
+    // 
+    public function getTagsListAttribute()
+    {
+        return $this->tags->pluck('name');
+    }
+    
+    public function createTags($tagString)
+    {   
+        // laravel,php,js
+        $tags = explode(",", $tagString);
+        $tagIds = [];
+
+        foreach ($tags as $tag) 
+        {        
+            // $newTag = Tag::firstOrCreate(            
+            //     ['slug' => str_slug($tag), 'name' => ucwords(trim($tag))]
+            // );// search base on slug and name
+
+            $newTag = Tag::firstOrCreate(
+                ['slug' => str_slug($tag)], ['name' => trim($tag)]
+            );// search base on slug
+
+            $tagIds[] = $newTag->id;
+        }
+        $this->tags()->detach();
+        $this->tags()->attach($tagIds);
     }
 
     public function scopeFilter($query, $filter)
